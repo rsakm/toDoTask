@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toDo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>To Do List</h1>
+    <div class="todoContainer">
+        <ul id="todoList">
+
+        </ul>
+    </div>
+    <form class="todoForm">
+        <input type="text" placeholder="Enter your to do here...">
+        <button type="submit">Add todo</button>
+    </form>
+
+
+    <script>
+        const taskContainer = document.getElementById('todoList')
+        const inputEle = document.querySelector('input');
+        const form = document.querySelector('form')
+
+        let counter = 1;
+        function addToDo(event){
+            event.preventDefault();
+            const toDoTask = inputEle.value.trim();
+            if(!toDoTask){
+                return
+            }else{
+            
+            const taskEle = document.createElement('li');
+            taskEle.setAttribute("id",`todo-${counter}`)
+
+            const spanEle = document.createElement('span')
+            spanEle.innerHTML = toDoTask
+            const delBtn = document.createElement('button')
+            delBtn.innerHTML = 'Delete'
+            delBtn.addEventListener("click",()=> {
+                taskEle.remove();
+            });
+            taskEle.appendChild(spanEle)
+            taskEle.appendChild(delBtn)
+            taskContainer.appendChild(taskEle);
+            inputEle.value=''
+            inputEle.focus(); // ✅ Set focus back to input field
+            counter++;
+            }
+        }
+        form.addEventListener("submit", addToDo);
+    </script>
+</body>
+</html>
