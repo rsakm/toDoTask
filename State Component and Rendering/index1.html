@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>To Do List</h1>
+    <div id="todos">
+
+    </div>
+    <input type="text" placeholder="Enter you todo here...">
+    <button  onclick="addTodo()">Add todo</button>
+
+
+    <script>
+        let todos = []
+
+
+        function addTodo(){
+            todos.push({
+                title:document.querySelector('input').value.trim()
+            })
+            document.querySelector('input').value = '';
+            render();
+        }
+
+        function createTodoComponent(todo,index){
+            const div = document.createElement('div')
+            const task = document.createElement('span')
+            task.innerHTML = todo.title;
+
+            const delBtn = document.createElement('button')
+            delBtn.innerHTML = ' Delete'
+            div.appendChild(task)
+            div.appendChild(delBtn)
+            delBtn.onclick = () => deleteTodo(index);
+
+            return div;
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1); // Remove task from the array
+            render(); // Re-render the updated list
+        }
+
+        function render(){
+            const todoContainer = document.getElementById('todos');
+    
+            if (todos.length === 0) {
+                todoContainer.style.display = "none";
+             } else {
+                todoContainer.style.display = "block";
+            }
+
+            todoContainer.innerHTML = '';
+            todos.forEach((todo,index)=>{
+                const element = createTodoComponent(todo,index)
+                document.querySelector('#todos').appendChild(element)
+            })
+
+            
+        }
+        // Hide the container initially when the page loads
+        document.addEventListener("DOMContentLoaded", () => {
+         document.getElementById('todos').style.display = "none";
+});
+    </script>
+</body>
+</html>
